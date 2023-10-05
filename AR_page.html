@@ -60,8 +60,8 @@
         <!-- Asset container -->
         <a-assets>
             <!-- Video asset for the AR experience -->
-            <video id="video" src=".\Assets\Auschwitz.mp4" preload="auto" loop
-                crossorigin="anonymous" webkit-playsinline playsinline>
+            <video id="video" src=".\Assets\Auschwitz.mp4" preload="auto" response-type="arraybuffer" loop
+                crossorigin="anonymous" webkit-playsinline autoplay muted playsinline>
             </video>
         <a-asset-item id="mainGateModel" src="./Assets/auschwitz_main_gate.glb"></a-asset-item>
 
@@ -86,8 +86,11 @@
         </a-entity>
         <!-- Second AR target entity for the 3D model -->
         <a-entity id="secondTarget" mindar-image-target="targetIndex: 1" ar-controller>
-          <a-entity id="modelObject" gltf-model="#mainGateModel" scale="0.004 0.004 0.004" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000" visible="false"></a-entity>
+            <a-entity id="modelContainer">
+                <a-entity id="modelObject" gltf-model="#mainGateModel" scale="0.004 0.004 0.004" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000" visible="false"></a-entity>
+            </a-entity>
         </a-entity>
+
 
 
     </a-scene>
