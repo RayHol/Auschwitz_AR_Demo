@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
   AFRAME.registerComponent("ar-controller", {
     init: function () {
+        // Function to hide text and background
+        function hideTextAndBackground() {
+            startText.style.display = "none";
+            backgroundImage.style.display = "none";
+        }
+      
         // Get references to the necessary DOM elements
         const target = document.getElementById("target");
         const secondTarget = document.getElementById("secondTarget");
@@ -10,14 +16,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const backgroundImage = document.getElementById("background");
         const backButton = document.getElementById("backButton");
         const dummyObject2 = document.getElementById("dummyObject2");
+        const modelObject = document.getElementById("modelObject");
         
         // Initialize variables
         var played = false;
+      
 
         // Event listener for first target found event
         target.addEventListener("targetFound", () => {
             console.log("Video target found");
             this.found = true;
+            hideTextAndBackground();
             if (!played) {
                 startText.style.display = "none";
                 backgroundImage.style.display = "none";
@@ -33,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
         target.addEventListener("targetLost", () => {
             console.log("Video target lost");
             this.found = false;
+            hideTextAndBackground();
             if (!played) {
                 video.pause();
                 startText.style.display = "block";
@@ -43,13 +53,17 @@ document.addEventListener('DOMContentLoaded', function () {
         // Event listener for second target found event
         secondTarget.addEventListener("targetFound", () => {
             console.log("3D Model target found");
-            dummyObject2.object3D.visible = true;
+            modelObject.setAttribute('visible', true);
+            startText.style.display = "none";  // Hide the start text
+            backgroundImage.style.display = "none";  // Hide the background image
         });
 
         // Event listener for second target lost event
         secondTarget.addEventListener("targetLost", () => {
             console.log("3D Model target lost");
-            dummyObject2.object3D.visible = false;
+            modelObject.setAttribute('visible', false);
+            startText.style.display = "block";  // Show the start text
+            backgroundImage.style.display = "block";  // Show the background image
         });
 
         // Event listener for back button click

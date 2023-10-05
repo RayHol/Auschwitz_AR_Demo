@@ -55,7 +55,7 @@
     z-index: 9;
     background: url("../Assets/Ruinas_02.jpg") no-repeat center center fixed; 
     background-size: contain;
-    opacity: 0.7;
+    opacity: 0.0;
     border: none;
     border-radius: 8px;
     overflow: hidden; 

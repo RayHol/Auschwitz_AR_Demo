@@ -86,9 +86,9 @@
         </a-entity>
         <!-- Second AR target entity for the 3D model -->
         <a-entity id="secondTarget" mindar-image-target="targetIndex: 1" ar-controller>
-          <!-- Dummy object for the 3D model -->
-          <a-box id="dummyObject2" visible="false"></a-box>
+          <a-entity id="modelObject" gltf-model="#mainGateModel" scale="0.004 0.004 0.004" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000" visible="false"></a-entity>
         </a-entity>
+
 
     </a-scene>
 </body>
