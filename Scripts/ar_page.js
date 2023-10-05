@@ -3,20 +3,18 @@ document.addEventListener('DOMContentLoaded', function () {
     init: function () {
         // Get references to the necessary DOM elements
         const target = document.getElementById("target");
+        const secondTarget = document.getElementById("secondTarget");
         const video = document.getElementById("video");
         const plane = document.getElementById("videooverlay");
         const startText = document.getElementById("startText");
         const backgroundImage = document.getElementById("background");
         const backButton = document.getElementById("backButton");
-        const secondTarget = document.getElementById("secondTarget");
         const dummyObject2 = document.getElementById("dummyObject2");
-        const mainGateModel = document.getElementById("mainGateModel");
-
+        
         // Initialize variables
         var played = false;
-        var modelEntity;
 
-        // Event listener for the first target found event
+        // Event listener for first target found event
         target.addEventListener("targetFound", () => {
             console.log("Video target found");
             this.found = true;
@@ -28,11 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 video.addEventListener("ended", function videoend(e) {
                     played = true;
                 }, false);
-                plane.object3D.position.copy(plane.object3D.position);
             }
         });
 
-        // Event listener for the first target lost event
+        // Event listener for first target lost event
         target.addEventListener("targetLost", () => {
             console.log("Video target lost");
             this.found = false;
@@ -43,37 +40,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Event listener for the second target found event
+        // Event listener for second target found event
         secondTarget.addEventListener("targetFound", () => {
             console.log("3D Model target found");
-            if (!modelEntity) {
-                let dummyWorldPos2 = new AFRAME.THREE.Vector3();
-                dummyObject2.object3D.getWorldPosition(dummyWorldPos2);
-
-                modelEntity = document.createElement("a-gltf-model");
-                modelEntity.setAttribute('src', mainGateModel.getAttribute('src'));
-                modelEntity.setAttribute("scale", "0.005 0.005 0.005");
-
-                modelEntity.object3D.position.copy(dummyWorldPos2);
-                modelEntity.object3D.quaternion.copy(dummyObject2.object3D.getWorldQuaternion(new AFRAME.THREE.Quaternion()));
-
-                this.el.sceneEl.appendChild(modelEntity);
-            }
+            dummyObject2.object3D.visible = true;
         });
 
-        // Event listener for the second target lost event
+        // Event listener for second target lost event
         secondTarget.addEventListener("targetLost", () => {
             console.log("3D Model target lost");
-            // Logic for unloading the 3D model can be added here if needed
+            dummyObject2.object3D.visible = false;
         });
 
-        // Event listener for arframe event
-        this.el.addEventListener("arframe", () => {
-            if (!this.found && played) {
-                plane.object3D.position.copy(plane.object3D.position);
-            }
-        });
-      
         // Event listener for back button click
         backButton.addEventListener('click', () => {
             window.location.href = 'index.html';
